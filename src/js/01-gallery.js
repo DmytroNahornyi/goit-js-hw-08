@@ -9,10 +9,11 @@ import SimpleLightbox from "simplelightbox";
 // Додатковий імпорт стилів
 import "simplelightbox/dist/simple-lightbox.min.css";
 
-const divReference = document.querySelector('.gallery');
+const divReference = document.querySelector(".gallery");
 const Markup = createGalleryMarkup(galleryItems);
+
 divReference.insertAdjacentHTML("beforeend", Markup);
-divReference.addEventListener("click", onGalleryItemClick);
+// divReference.addEventListener("click", onGalleryItemClick);
 
 function createGalleryMarkup(galleryItems) {
     return galleryItems.map(({preview, original, description}) => {
@@ -20,8 +21,9 @@ function createGalleryMarkup(galleryItems) {
         <img class="gallery__image" src="${preview}" data-source="${original}" alt="${description}" /> </a>`;
     }).join('');
 }
-const addGalleryMarkup = createGalleryMarkup(galleryItems);
-divReference.innerHTML = addGalleryMarkup;
+
+const GalleryMarkup = createGalleryMarkup(galleryItems);
+divReference.innerHTML = GalleryMarkup;
 
 function onGalleryItemClick(event) {
     event.preventDefault();
@@ -36,5 +38,10 @@ function onGalleryItemClick(event) {
     document.addEventListener("keydown", event => {
         if (event.key === "Escape") instance.close();
     });
-}
-console.log(galleryItems);
+};
+
+let lightbox = new SimpleLightbox(".gallery a", {
+    captionsData: "alt",
+    captionDelay: 250,
+});
+// console.log(galleryItems);
